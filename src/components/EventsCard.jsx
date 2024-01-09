@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import Button from "./Button"
 import Tester from "../../client/tester"
-import Calendar from "./Calendar";
 import Form from "./Form";
+import { allEvents } from '../../client/estilocalico';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
 function EventsCard() {
+    const [events, setEvents] = useState()
+
+    useEffect(() => {
+        // allEvents returns a Promise. I needed to use .then() to access value 
+        // returned by allEvents' Promise
+        allEvents().then(events=> setEvents(events))
+    }, [])
 
     return (
         <>
@@ -15,7 +24,12 @@ function EventsCard() {
             </div>
             <Form />
             {/* <Button label={"Add Event"} /> */}
-            <Calendar />
+            <FullCalendar
+            plugins={[dayGridPlugin]}
+            events = {
+                events
+            }
+            />
             <Tester />
         </>
     )
