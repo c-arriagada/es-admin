@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./Button"
 import Tester from "../../client/tester"
 import Calendar from "./Calendar";
+import Form from "./Form";
 
 function EventsCard() {
 
@@ -12,7 +13,8 @@ function EventsCard() {
                 <p>Display events from DB</p>
                 <p>Each item will have an update and delete button option</p>
             </div>
-            <Button label={"Add Event"} />
+            <Form />
+            {/* <Button label={"Add Event"} /> */}
             <Calendar />
             <Tester />
         </>
