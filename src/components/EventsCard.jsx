@@ -1,20 +1,21 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Tester from "../../client/tester"
 import EventForm from "./EventForm";
 import { allEvents, createEvent } from '../../client/estilocalico';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import Modal from './Modal'
 
 function EventsCard() {
     const [events, setEvents] = useState()
+    const [openModal, setOpenModal] = useState()
 
     useEffect(() => {
         // allEvents returns a Promise. I needed to use .then() to access value 
         // returned by allEvents' Promise
-        allEvents().then(events=> setEvents(events))
+        allEvents().then(setEvents)
     }, [])
 
-    // handle onClick effect on form component here
     const addEvent = (event) => {
         console.log('creating event', event)
         createEvent(event)
@@ -31,14 +32,22 @@ function EventsCard() {
                 <p>Display events from DB</p>
                 <p>Each item will have an update and delete button option</p>
             </div>
-            <EventForm onSubmit={addEvent}/>
+            <EventForm onSubmit={addEvent} />
             <FullCalendar
-            plugins={[dayGridPlugin]}
-            events = {
-                events
-            }
+                plugins={[dayGridPlugin]}
+                events={
+                    events
+                }
+                eventClick={(e) => {
+                    console.log(e.event.title, e.event.start, e.event.extendedProps.venue, e.event.extendedProps.address)
+                    setOpenModal(true)
+                }}
+            // eventClick={(eventInFullCalendarFormat) => { 
+            //          const evenObj = transformFullCalendarEvent(eventInFullCalendarFormat)
+            //          openModal(eventObj)
+            // }         
             />
-            <Tester />
+            {openModal && <Modal closeModal={setOpenModal} />}
         </>
     )
 }
