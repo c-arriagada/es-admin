@@ -11,17 +11,24 @@ async function getEvent(id) {
     return event
 }
 
-async function createEvent(data) {
+async function createEvent(eventObj) {
     const response = await fetch("http://127.0.0.1:5000/events", {
         method:'POST', 
         headers: {
             "Content-Type":"application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(eventObj)
     });
     const newEvent = response.json();
     console.log(newEvent)
     return newEvent;
 }
 
-export {allEvents, getEvent, createEvent}
+async function deleteEvent(eventId) {
+    const response = await fetch("http://127.0.0.1:5000/events" + "/" + eventId, {
+        method:'DELETE', 
+    });
+    return "Event was deleted";
+}
+
+export {allEvents, getEvent, createEvent, deleteEvent}
