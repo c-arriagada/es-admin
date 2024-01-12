@@ -39,21 +39,6 @@ function Modal({ closeModal, eventDetails, deleteEvent, updateEvent}) {
                     <h1>Event</h1>
                 </div>
                 <div className="body">
-                    <p>{eventDetails.title}</p>
-                    <p>{dateTime.toLocaleString([], options)}</p>
-                    {/* <p>{new Date(eventDetails.startTime).toLocaleTimeString}</p> */}
-                    <p>{eventDetails.venue}</p>
-                    <p>{eventDetails.address}</p>
-                </div>
-                <div className="footer">
-                    <button>Update event</button>
-                    <button onClick={()=> {
-                        console.log('eventId', eventDetails.id)
-                        deleteEvent(eventDetails.id)
-                        closeModal(false)
-                        }}>Delete event</button>
-                </div>
-                <div>
                     <form id="modalForm">
                         <label htmlFor="titleModal">Title:</label>
                         <input type="text" name="title" defaultValue={eventDetails.title} /><br/>
@@ -64,7 +49,15 @@ function Modal({ closeModal, eventDetails, deleteEvent, updateEvent}) {
                         <input type="text" name="venue" defaultValue={eventDetails.venue} /><br/>
                         <label htmlFor="addressModal">Address:</label>
                         <input type="text" name="address" defaultValue={eventDetails.address} /><br/>
-                        <button type="submit" onClick={handleSubmit}>Submit</button>
+                        <div className="footer">
+                            {/* <button>Update event</button> */}
+                            <button className="updateBtn" type="submit" onClick={handleSubmit}>Update Event</button>
+                            <button className="deleteBtn" onClick={()=> {
+                                console.log('eventId', eventDetails.id)
+                                deleteEvent(eventDetails.id)
+                                closeModal(false)
+                                }}>Delete Event</button>
+                        </div>  
                     </form>
                 </div>
             </div>

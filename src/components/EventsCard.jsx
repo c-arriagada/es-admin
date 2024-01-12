@@ -59,11 +59,10 @@ function EventsCard() {
     return (
         <>
             <h2>Events</h2>
-            <div>
-                <p>Display events from DB</p>
-                <p>Each item will have an update and delete button option</p>
+            <p><b>Instructions:</b> You can add events by completing the form below. To add or delete events click on the event in the calendar.</p>
+            <div className="addEvent">
+                <EventForm onSubmit={addEvent} />
             </div>
-            <EventForm onSubmit={addEvent} />
             {!openModal &&
                 <FullCalendar
                     plugins={[dayGridPlugin]}

@@ -2,12 +2,20 @@ import React, { useState } from "react";
 
 function EventForm(props) {
     const emptyForm = {
-        "title": "abc",
-        "start_date": "2024-01-13T22:45",
-        "start_time": "2024-01-13T22:45",
-        "venue": "HOB",
-        "address": "123 Cute Street"
+        "title": "", 
+        "start_date": "",
+        "start_time": "",
+        "venue": "",
+        "address": ""
     }
+    // test data to populate form
+    // const sampleObj = {
+    //     "title": "abc", 
+    //     "start_date": "2024-01-13T22:45",
+    //     "start_time": "2024-01-13T22:45",
+    //     "venue": "HOB",
+    //     "address": "123 Cute Street"
+    // }
     const {onSubmit} = props
     const [formValues, setFormValues] = useState(emptyForm)
 
@@ -31,7 +39,7 @@ function EventForm(props) {
                 <label htmlFor="address">Address:</label>
                 <input type="text" id="address" name="address" placeholder="333 Cool Street" value={formValues.address} onChange={e => setFormValues({ ...formValues, "address": e.target.value })} /><br />
                 {/* <button type="submit" onClick={handleClick}>Add Event</button> */}
-                <button onClick={handleClick}>Add Event</button>
+                <button className="addEventBtn"   onClick={handleClick}>Add Event</button>
             </form>
         </>
     )

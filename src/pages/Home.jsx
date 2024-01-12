@@ -6,7 +6,7 @@ function Home() {
     return (
         <>
             <EventsCard/>
-            <VideosCard/>
+            {/* <VideosCard/> */}
         </>
     )
 }
