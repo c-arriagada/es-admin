@@ -31,4 +31,16 @@ async function deleteEvent(eventId) {
     return "Event was deleted";
 }
 
-export {allEvents, getEvent, createEvent, deleteEvent}
+async function updateEvent(eventObj, eventId) {
+    const response = await fetch("http://127.0.0.1:5000/events" + "/" + eventId, {
+        method:'PATCH',
+        headers: {
+            "Content-type":"application/json"
+        },
+        body: JSON.stringify(eventObj)
+    });
+    const updatedEvent = response.json()
+    return updatedEvent;
+}
+
+export {allEvents, getEvent, createEvent, deleteEvent, updateEvent}

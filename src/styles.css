@@ -1,4 +1,6 @@
-
+h1 {
+    color: red;
+}
 .modalBackground {
     width: 100vw;
     height: 100vh;
