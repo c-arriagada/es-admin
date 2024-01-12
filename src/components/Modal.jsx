@@ -43,14 +43,12 @@ function Modal({ closeModal, eventDetails, deleteEvent, updateEvent}) {
                         <label htmlFor="titleModal">Title:</label>
                         <input type="text" name="title" defaultValue={eventDetails.title} /><br/>
                         <label htmlFor="dateTimeModal">Date and time:</label>
-                        {/* <input type="datetime-local" name="dateTime" defaultValue={dateTimeISO.slice(0,-8)} /><br/> */}
                         <input type="datetime-local" name="dateTime" defaultValue={dateTimeISO} /><br/>
                         <label htmlFor="venueModal">Venue:</label>
                         <input type="text" name="venue" defaultValue={eventDetails.venue} /><br/>
                         <label htmlFor="addressModal">Address:</label>
                         <input type="text" name="address" defaultValue={eventDetails.address} /><br/>
                         <div className="footer">
-                            {/* <button>Update event</button> */}
                             <button className="updateBtn" type="submit" onClick={handleSubmit}>Update Event</button>
                             <button className="deleteBtn" onClick={()=> {
                                 console.log('eventId', eventDetails.id)
