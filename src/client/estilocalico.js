@@ -1,18 +1,20 @@
+const HOST = "https://app.estilocalico.com"
+
 async function allEvents() {
-    const response = await fetch("http://127.0.0.1:5000/events");
+    const response = await fetch(`${HOST}/events`);
     const events = response.json();
     return events;
 }
 
-async function getEvent(id) {
-    const response = await fetch("http://127.0.0.1:5000/events" + "/" + id);
+async function getEvent(eventId) {
+    const response = await fetch(`${HOST}/events/${eventId}`);
     const event = response.json()
     console.log(event)
     return event
 }
 
 async function createEvent(eventObj) {
-    const response = await fetch("http://127.0.0.1:5000/events", {
+    const response = await fetch(`${HOST}/events`, {
         method:'POST', 
         headers: {
             "Content-Type":"application/json"
@@ -25,14 +27,14 @@ async function createEvent(eventObj) {
 }
 
 async function deleteEvent(eventId) {
-    const response = await fetch("http://127.0.0.1:5000/events" + "/" + eventId, {
+    const response = await fetch(`${HOST}/events/${eventId}`, {
         method:'DELETE', 
     });
     return "Event was deleted";
 }
 
 async function updateEvent(eventObj, eventId) {
-    const response = await fetch("http://127.0.0.1:5000/events" + "/" + eventId, {
+    const response = await fetch(`${HOST}/events/${eventId}`, {
         method:'PATCH',
         headers: {
             "Content-type":"application/json"

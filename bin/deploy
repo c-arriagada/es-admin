@@ -1,0 +1,4 @@
+#!/bin/bash
+pushd /Users/caherita/code/es-admin/dist
+aws s3 cp . s3://estilo-calico-admin/ --exclude "*" --include "*" --recursive
+popd
