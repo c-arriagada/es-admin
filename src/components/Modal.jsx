@@ -7,7 +7,6 @@ function Modal({ closeModal, eventDetails, deleteEvent, updateEvent }) {
     let dateTime = new Date(eventDetails.start)
     // let dateTimeISO = dateTime.toISOString()
     let dateTimeISO = dateTime.toLocaleString('sv')
-    console.log(dateTimeISO)
 
     const options = {
         weekday: 'short',
@@ -24,7 +23,8 @@ function Modal({ closeModal, eventDetails, deleteEvent, updateEvent }) {
         const data = new FormData(form)
         const formValues = {
             "title": data.get('title'),
-            "start_date": data.get('dateTime'),
+            // transform "2024-01-13T22:45" to "2024-01-13T22:45:00Z"
+            "start_date": new Date(data.get('dateTime')).toISOString(),
             "venue": data.get('venue'),
             "address": data.get('address')
         }
