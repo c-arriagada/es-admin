@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import EventForm from "./EventForm";
 import { allEvents, createEvent, deleteEvent, updateEvent } from '../client/estilocalico';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import Modal from './Modal'
+import AuthContext from "../client/context";
 
 function EventsCard() {
     const [events, setEvents] = useState([])
     const [openModal, setOpenModal] = useState()
     const [eventDetails, setEventDetails] = useState()
 
+    const idToken = useContext(AuthContext)
+    console.log("[loading events] retrieve id_token", idToken)
+
     useEffect(() => {
         // allEvents returns a Promise. I needed to use .then() to access value 
         // returned by allEvents' Promise
-        allEvents().then(setEvents)
-    }, [])
+        allEvents(idToken).then(setEvents)
+    }, [idToken])
 
-    const addEvent = (event) => {
+    const addEvent = (event, token) => {
         console.log('creating event', event)
-        createEvent(event)
+        createEvent(event, token)
             .then(createdEvent => {
                 setEvents([...events, createdEvent])
                 console.log('created event', createdEvent)
             })
     }
 
-    const delEvent = (eventId) => {
+    const delEvent = (eventId, token) => {
         console.log('deleting event', eventId)
-        deleteEvent(eventId)
+        deleteEvent(eventId, token)
             .then(() => {
                 const updatedEvents = events.filter((event) => event.id.toString() !== eventId)
                 setEvents(updatedEvents)
@@ -35,8 +39,8 @@ function EventsCard() {
             })
     }
 
-    const updEvent = (eventObj, eventId) => {
-        updateEvent(eventObj, eventId)
+    const updEvent = (eventObj, eventId, token) => {
+        updateEvent(eventObj, eventId, token)
             .then((updatedEvent) => {
                 // reset state with the information of the updated event
                 // find event that was updated

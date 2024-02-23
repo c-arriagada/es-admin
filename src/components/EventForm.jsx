@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import authContext from '../client/context'
 
 function EventForm(props) {
+    const idToken = useContext(authContext)
+
     const emptyForm = {
-        "title": "", 
+        "title": "",
         "start_date": "",
         "start_time": "",
         "venue": "",
@@ -16,12 +19,12 @@ function EventForm(props) {
     //     "venue": "HOB",
     //     "address": "123 Cute Street"
     // }
-    const {onSubmit} = props
+    const { onSubmit } = props
     const [formValues, setFormValues] = useState(emptyForm)
 
     const handleClick = (event) => {
         event.preventDefault()
-        onSubmit(formValues)
+        onSubmit(formValues, idToken)
         setFormValues(emptyForm)
     }
 
@@ -39,7 +42,7 @@ function EventForm(props) {
                 <label htmlFor="address">Address:</label>
                 <input type="text" id="address" name="address" placeholder="333 Cool Street" value={formValues.address} onChange={e => setFormValues({ ...formValues, "address": e.target.value })} /><br />
                 {/* <button type="submit" onClick={handleClick}>Add Event</button> */}
-                <button className="addEventBtn"   onClick={handleClick}>Add Event</button>
+                <button className="addEventBtn" onClick={handleClick}>Add Event</button>
             </form>
         </>
     )

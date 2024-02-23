@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import Home from "./pages/Home"
+import Login from './pages/Login';
 import './styles.css'
 
 function App() {
 
-        return (
-            <div>
-                <h1>Hello admin!</h1>
-                <Home />
-            </div>
+    let callback = window.location.search;
+
+    return (
+        callback ? <Home/> : <Login/>
         )
 }
 
