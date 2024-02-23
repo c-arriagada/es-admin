@@ -24,12 +24,15 @@ function EventForm(props) {
 
     const handleClick = (event) => {
         event.preventDefault()
+        // transform "2024-01-13T22:45" to "2024-01-13T22:45:00Z"
+        const date_time = new Date(formValues.start_date).toISOString()
+        formValues.start_date = date_time
         onSubmit(formValues, idToken)
         setFormValues(emptyForm)
     }
 
     return (
-        <>
+        <>  
             <form>
                 <label htmlFor="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Concert" value={formValues.title} onChange={e => setFormValues({ ...formValues, "title": e.target.value })} /><br />

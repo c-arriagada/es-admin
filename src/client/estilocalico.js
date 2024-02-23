@@ -1,4 +1,5 @@
-const HOST = "https://app.estilocalico.com"
+// const HOST = "https://app.estilocalico.com"
+const HOST = "http://127.0.0.1:5000"
 
 async function allEvents(token) {
     const response = await fetch(`${HOST}/events`, {
@@ -13,11 +14,11 @@ async function allEvents(token) {
 
 async function getEvent(eventId, token) {
     const response = await fetch(`${HOST}/events/${eventId}`, {
-                    method: 'GET', 
-                    headers: {
-                        Authorization: token
-                    }
-                    });
+        method: 'GET',
+        headers: {
+            Authorization: token
+        }
+    });
     const event = response.json()
     console.log(event)
     return event
@@ -25,21 +26,20 @@ async function getEvent(eventId, token) {
 
 async function createEvent(eventObj, token) {
     const response = await fetch(`${HOST}/events`, {
-        method:'POST', 
+        method: 'POST',
         headers: {
-            "Content-Type":"application/json",
+            "Content-Type": "application/json",
             Authorization: token
         },
         body: JSON.stringify(eventObj)
     });
     const newEvent = response.json();
-    console.log(newEvent)
     return newEvent;
 }
 
 async function deleteEvent(eventId, token) {
     const response = await fetch(`${HOST}/events/${eventId}`, {
-        method:'DELETE', 
+        method: 'DELETE',
         headers: {
             Authorization: token,
         }
@@ -50,9 +50,9 @@ async function deleteEvent(eventId, token) {
 async function updateEvent(eventObj, eventId, token) {
     console.log("[updating event] idToken", token)
     const response = await fetch(`${HOST}/events/${eventId}`, {
-        method:'PATCH',
+        method: 'PATCH',
         headers: {
-            "Content-type":"application/json",
+            "Content-type": "application/json",
             Authorization: token,
         },
         body: JSON.stringify(eventObj)
@@ -61,4 +61,4 @@ async function updateEvent(eventObj, eventId, token) {
     return updatedEvent;
 }
 
-export {allEvents, getEvent, createEvent, deleteEvent, updateEvent}
+export { allEvents, getEvent, createEvent, deleteEvent, updateEvent }
