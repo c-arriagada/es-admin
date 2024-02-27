@@ -1,5 +1,4 @@
-// const HOST = "https://app.estilocalico.com"
-const HOST = "http://127.0.0.1:5000"
+const HOST = "https://app.estilocalico.com"
 
 async function allEvents(token) {
     const response = await fetch(`${HOST}/events`, {
