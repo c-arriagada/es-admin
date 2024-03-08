@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import EventsCard from "../components/EventsCard";
 import VideosCard from "../components/VideosCard";
 import AuthContext from "../client/context";
@@ -18,7 +18,7 @@ function Home() {
                 'grant_type': 'authorization_code',
                 'client_id': '7nk2p2fkrha638okq6m2tbobir',
                 'code': `${code}`,
-                'redirect_uri': 'http://localhost:8080'
+                'redirect_uri': 'https://admin.estilocalico.com'
             })
         }
         console.log("[get auth token] request options", postOptions)
@@ -35,14 +35,14 @@ function Home() {
     useEffect(() => {
         // get code to exchange for token from query params
         async function x() {
-        const urlParams = new URLSearchParams(window.location.search); // replace url.search with window.location.search 
-        const code = urlParams.get('code')
-        console.log(code)
+            const urlParams = new URLSearchParams(window.location.search); // replace url.search with window.location.search 
+            const code = urlParams.get('code')
+            console.log(code)
 
-        const authToken = await getAuthToken(code)
-        console.log("authToken in useEffect", authToken)
+            const authToken = await getAuthToken(code)
+            console.log("authToken in useEffect", authToken)
 
-        setIdToken(authToken)
+            setIdToken(authToken)
         }
 
         x()
