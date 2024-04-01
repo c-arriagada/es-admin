@@ -14,9 +14,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Estilo Calico Admin Portal
           </Typography>
-          <Button color="inherit">Events</Button>
-          <Button color="inherit">Bios</Button>
-          <Button color="inherit">Sign Out</Button>
+          <Button component={Link} to={'/home'} color="inherit">Events</Button>
+          <Button component={Link} to={'/bios'} color="inherit">Bios</Button>
+          <Button component={Link} to={'/login'} color="inherit">Sign Out</Button>
         </Toolbar>
       </AppBar>
     </Box>

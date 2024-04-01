@@ -13,11 +13,10 @@ function App() {
     const navigate = useNavigate()
 
     let callback = window.location.search;
-    
-           
+     
     useEffect(() => {
         const updateUser = async () => {
-            const urlParams = new URLSearchParams(window.location.search); // replace url.search with window.location.search 
+            const urlParams = new URLSearchParams(window.location.search);
             let tempCode = urlParams.get('code')
             if(!tempCode) {
                 return;
@@ -25,6 +24,7 @@ function App() {
             let accessToken = await getAuthToken(tempCode)
             if(accessToken) {
                 let [header, body, signature] = accessToken.split('.')
+                //  "atob" below should be read as "ASCII to binary". It decodes a Base64-encoded string.
                 setUser({...user, code: tempCode, accessToken, identity:JSON.parse(atob(body))})
                 navigate('/home')  
             }
@@ -40,7 +40,7 @@ function App() {
                     <Route index element={<Login />} />
                     <Route path="home" element={<Home user={user} />} />
                     <Route path="bios" element={<Bios />} />
-                    <Route path="signOut" element={<Login />} />
+                    <Route path="login" element={<Login />} />
             </Routes>
     )
 }
