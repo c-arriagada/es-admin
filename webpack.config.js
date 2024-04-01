@@ -9,6 +9,8 @@ module.exports = {
         publicPath: '/'
     },
     devServer: {
+        // allows for refreshing a webpage without getting a cannot GET page error
+        historyApiFallback: true,
         static: {
             directory: path.join(__dirname, 'dist'),
             publicPath: '/'
@@ -29,7 +31,7 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use:['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader']
             }
         ]
     },

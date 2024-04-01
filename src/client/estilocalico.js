@@ -60,4 +60,31 @@ async function updateEvent(eventObj, eventId, token) {
     return updatedEvent;
 }
 
-export { allEvents, getEvent, createEvent, deleteEvent, updateEvent }
+// get code to exchange for token from query params
+async function getAuthToken(code) {
+    let url = "https://estilocalico.auth.us-east-2.amazoncognito.com/oauth2/token"
+
+    let postOptions = {
+        'method': 'POST',
+        'headers': {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        'body': new URLSearchParams({
+            'grant_type': 'authorization_code',
+            'client_id': '7nk2p2fkrha638okq6m2tbobir',
+            'code': `${code}`,
+            'redirect_uri': 'http://localhost:8080' // change to https://admin.estilocalico.com before deploying
+        })
+    }
+    console.log("[get auth token] request options", postOptions)
+    const authToken = await fetch(url, postOptions)
+        .then(response => response.json())
+        .then(tokenResponse => {
+            console.log('[get auth token] id_token response', tokenResponse.id_token)
+            return tokenResponse.id_token;
+        });
+    // console.log(authToken)
+    return authToken;
+}
+
+export { allEvents, getEvent, createEvent, deleteEvent, updateEvent, getAuthToken }

@@ -1,16 +1,48 @@
-import React, { Component } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route} from "react-router-dom"
 import Home from "./pages/Home"
 import Login from './pages/Login';
+import Bios from "./pages/Bios";
+import { useNavigate } from 'react-router-dom';
+import { getAuthToken } from './client/estilocalico';
 import './styles.css'
 
 function App() {
+    const [user, setUser] = useState({});
+
+    const navigate = useNavigate()
 
     let callback = window.location.search;
+    
+           
+    useEffect(() => {
+        const updateUser = async () => {
+            const urlParams = new URLSearchParams(window.location.search); // replace url.search with window.location.search 
+            let tempCode = urlParams.get('code')
+            if(!tempCode) {
+                return;
+            }
+            let accessToken = await getAuthToken(tempCode)
+            if(accessToken) {
+                let [header, body, signature] = accessToken.split('.')
+                setUser({...user, code: tempCode, accessToken, identity:JSON.parse(atob(body))})
+                navigate('/home')  
+            }
+            
+        }
+        updateUser();
+    }, [callback])
+
+    console.log(user)
 
     return (
-        callback ? <Home/> : <Login/>
-        )
+            <Routes>
+                    <Route index element={<Login />} />
+                    <Route path="home" element={<Home user={user} />} />
+                    <Route path="bios" element={<Bios />} />
+                    <Route path="signOut" element={<Login />} />
+            </Routes>
+    )
 }
 
 export default App;
