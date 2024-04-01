@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import EventsCard from "../components/EventsCard";
 import VideosCard from "../components/VideosCard";
 import AuthContext from "../client/context";
+import NavBar from "../components/NavBar"
 
 function Home() {
     const [idToken, setIdToken] = useState(null)
@@ -51,6 +52,7 @@ function Home() {
     return (
         <>
             <AuthContext.Provider value={idToken}>
+                <NavBar />
                 <EventsCard />
             </AuthContext.Provider>
         </>

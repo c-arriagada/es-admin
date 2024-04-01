@@ -62,8 +62,8 @@ function EventsCard() {
 
     return (
         <>
-            <h2>Events</h2>
-            <p><b>Instructions:</b> You can add events by completing the form below. To add or delete events click on the event in the calendar.</p>
+            <h1>Events</h1>
+            <p><b>Instructions:</b> You can add events by completing the form below. To update or delete events click on the event in the calendar.</p>
             <div className="addEvent">
                 <EventForm onSubmit={addEvent} />
             </div>
