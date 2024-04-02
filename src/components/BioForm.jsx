@@ -12,12 +12,28 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
     }
 
     const [formValues, setFormValues] = useState(startingData||emptyForm)
+    // const [fileName, setFileName] = useState(undefined)
+    const [file, setFile] = useState(undefined)
+    const [imgString, setImgString] = useState("")
 
     function handleSubmit(event) {
         event.preventDefault();
-        onSubmit(formValues) // TODO: add idToken before deploying to production
+        onSubmit({...formValues, bio_img: imgString}) // TODO: add idToken before deploying to production
         setFormValues(emptyForm)
+        console.log(file)
     }
+
+    function handleOnChange(e) {
+        const selectedFile = e.target.files[0]
+        setFile(selectedFile)
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            setImgString(reader.result);
+        }
+        reader.readAsDataURL(selectedFile)
+    }
+
+    console.log('imgString', imgString)
  
     return (
         <>
@@ -32,6 +48,7 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
             autoComplete="off"
         >
             <form onSubmit={handleSubmit}>
+                <img src={formValues.bio_img}/>
                 <Stack spacing={2} direction="row" sx={{marginBottom: 1}}>
                     <TextField
                         type="text"
@@ -95,14 +112,17 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
                             variant="contained" 
                             size="small" 
                             color='secondary' 
-                            component="label">
+                            component="label"
+                            >
                                 Upload Photo
                                 <input
                                     type="file"
                                     accept="image/*"
                                     hidden
+                                    onChange={handleOnChange}
                                 />
-                        </Button>   
+                        </Button> 
+                <a>{file?.name}</a>  
                 </Stack>
             </form>
         </Box>
