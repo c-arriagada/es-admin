@@ -6,27 +6,29 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard({bio}) {
+export default function MediaCard({ bio, deleteBio }) {
 
 
-  return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {bio.first_name + " " + bio.last_name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {bio.bio}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Read Full Bio</Button>
-      </CardActions>
-    </Card>
-  );
+
+    return (
+        <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+                sx={{ height: 140 }}
+                image="/static/images/cards/contemplative-reptile.jpg"
+                title="green iguana"
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {bio.first_name + " " + bio.last_name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {bio.bio}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small">Read Full Bio</Button>
+                <Button size="small" color='error' onClick={()=>deleteBio(bio.id)}>Delete</Button>
+            </CardActions>
+        </Card>
+    );
 }

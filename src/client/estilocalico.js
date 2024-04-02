@@ -127,7 +127,7 @@ async function createBio(bioObj, token) {
 }
 
 async function deleteBio(bioId, token) {
-    const response = await fetch(`${HOST}bios/${bioId}`, {
+    const response = await fetch(`${HOST}/bios/${bioId}`, {
         method: 'DELETE',
         headers: {
             Authorization: token,
