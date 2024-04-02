@@ -91,6 +91,18 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
                             onClick={()=>deleteBio(formValues["id"])}>
                                 Delete
                         </Button>]}
+                <Button key="upload" 
+                            variant="contained" 
+                            size="small" 
+                            color='secondary' 
+                            component="label">
+                                Upload Photo
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    hidden
+                                />
+                        </Button>   
                 </Stack>
             </form>
         </Box>

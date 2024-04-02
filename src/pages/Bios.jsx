@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar"
 import BioForm from "../components/BioForm";
-import BioCard from "../components/BioCard";
 import { createBio, allBios, deleteBio, updateBio} from "../client/estilocalico";
 import { create } from "@mui/material/styles/createTransitions";
 
