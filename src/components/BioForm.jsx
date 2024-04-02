@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { TextField, Button, Stack, Box } from '@mui/material';
 import authContext from '../client/context';
 
-const BioForm = ({onSubmit}) => {
+const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
     // const idToken = useContext(authContext)
 
     const emptyForm = {
@@ -11,11 +11,10 @@ const BioForm = ({onSubmit}) => {
         "bio": ""
     }
 
-    const [formValues, setFormValues] = useState(emptyForm)
+    const [formValues, setFormValues] = useState(startingData||emptyForm)
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(formValues) 
         onSubmit(formValues) // TODO: add idToken before deploying to production
         setFormValues(emptyForm)
     }
@@ -71,7 +70,27 @@ const BioForm = ({onSubmit}) => {
                     required
                 />
                 <Stack spacing={2} direction="row" sx={{marginBottom: 3}}>
-                <Button variant="outlined" color="secondary" type="submit">Add New Bio</Button>
+                {!startingData ? <Button key="create"
+                                            variant="outlined" 
+                                            size='small' 
+                                            color="secondary" 
+                                            type="submit">
+                                                Add New Bio
+                                        </Button>: 
+                [<Button key="save" 
+                            variant="outlined" 
+                            size="small" 
+                            color='secondary' 
+                            onClick={()=>updateBio(formValues)}>
+                                Save
+                        </Button>,
+                <Button key="del"
+                            variant="outlined" 
+                            size="small" 
+                            color='error' 
+                            onClick={()=>deleteBio(formValues["id"])}>
+                                Delete
+                        </Button>]}
                 </Stack>
             </form>
         </Box>

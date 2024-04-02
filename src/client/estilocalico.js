@@ -109,7 +109,6 @@ async function getBio(bioId, token) {
         }
     });
     const bio = response.json()
-    console.log(bio)
     return bio
 }
 
@@ -136,9 +135,9 @@ async function deleteBio(bioId, token) {
     return "Bio was deleted";
 }
 
-async function updateBio(bioObj, bioId, token) {
-    console.log("[updating event] idToken", token)
-    const response = await fetch(`${HOST}/bios/${bioId}`, {
+async function updateBio(bioObj, token) {
+    // console.log("[updating event] idToken", token)
+    const response = await fetch(`${HOST}/bios/${bioObj["id"]}`, {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",

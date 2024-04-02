@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar"
 import BioForm from "../components/BioForm";
 import BioCard from "../components/BioCard";
-import { createBio, allBios, deleteBio} from "../client/estilocalico";
+import { createBio, allBios, deleteBio, updateBio} from "../client/estilocalico";
 import { create } from "@mui/material/styles/createTransitions";
 
 function Bios() {
@@ -18,7 +18,7 @@ function Bios() {
         //     "id": 2,
         //     "last_name": "Raffanti"
         // }
-        console.log(memberBios)
+        console.log('Reloading all bios', memberBios)
         setBios(memberBios);
     }
 
@@ -36,14 +36,17 @@ function Bios() {
         .then(reloadBios)
     }
 
-    const bioCards = bios.map((bio) => <BioCard bio={bio} deleteBio={delBio}/>)
+    const updBio = (bioObj) => {
+        updateBio(bioObj)
+        .then(reloadBios)
+    }
 
     return (
         <>
             <NavBar />
             <h1>Bios</h1>
-            <BioForm onSubmit={newBio} />
-            {bioCards}
+            <BioForm key={"new"} onSubmit={newBio} />
+            {bios && bios.map((bio) => <BioForm key={bio["id"]} onSubmit={newBio} startingData={bio} deleteBio ={delBio} updateBio={updBio}/>)}
         </>
     )
 }
