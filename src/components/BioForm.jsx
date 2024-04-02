@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { TextField, Button, Stack, Box } from '@mui/material';
+import { TextField, Button, Stack, Box, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import authContext from '../client/context';
 
 const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
@@ -42,14 +42,22 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
             sx={{
                 display:'flex', 
                 flexWrap: 'wrap',
-                width: '75%'
+                width: '75%', 
+                padding: '10px',
             }}
             noValidate
             autoComplete="off"
         >
             <form onSubmit={handleSubmit}>
-                <img src={formValues.bio_img}/>
-                <Stack spacing={2} direction="row" sx={{marginBottom: 1}}>
+                <Card sx={{ maxWidth: 345 }}
+                    elevation={8}>
+                    <CardMedia
+                        sx={{ height: 140 }}
+                        image={formValues.bio_img}
+                        title="member headshot"
+                    />
+                    <CardContent>
+                    <Stack spacing={2} direction="row" sx={{marginBottom: 1}}>
                     <TextField
                         type="text"
                         variant='outlined'
@@ -87,14 +95,18 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
                     required
                 />
                 <Stack spacing={2} direction="row" sx={{marginBottom: 3}}>
-                {!startingData ? <Button key="create"
+                </Stack>
+                    </CardContent>
+                    <CardActions>
+                    {!startingData ? <Button key="create"
                                             variant="outlined" 
                                             size='small' 
                                             color="secondary" 
                                             type="submit">
                                                 Add New Bio
                                         </Button>: 
-                [<Button key="save" 
+                [
+                    <Button key="save" 
                             variant="outlined" 
                             size="small" 
                             color='secondary' 
@@ -107,7 +119,8 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
                             color='error' 
                             onClick={()=>deleteBio(formValues["id"])}>
                                 Delete
-                        </Button>]}
+                        </Button>
+                ]}        
                 <Button key="upload" 
                             variant="contained" 
                             size="small" 
@@ -122,8 +135,9 @@ const BioForm = ({onSubmit, startingData, deleteBio, updateBio}) => {
                                     onChange={handleOnChange}
                                 />
                         </Button> 
-                <a>{file?.name}</a>  
-                </Stack>
+                        <a>{file?.name}</a> 
+                    </CardActions>
+                    </Card>
             </form>
         </Box>
     </>
