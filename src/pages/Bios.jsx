@@ -44,8 +44,10 @@ function Bios() {
         <>
             <NavBar />
             <h1>Bios</h1>
-            <BioForm key={"new"} onSubmit={newBio} />
-            {bios && bios.map((bio) => <BioForm key={bio["id"]} onSubmit={newBio} startingData={bio} deleteBio ={delBio} updateBio={updBio}/>)}
+            <div className="memberBios">
+                <BioForm key={"new"} onSubmit={newBio} />
+                {bios && bios.map((bio) => <BioForm key={bio["id"]} onSubmit={newBio} startingData={bio} deleteBio ={delBio} updateBio={updBio}/>)}
+            </div>
         </>
     )
 }
