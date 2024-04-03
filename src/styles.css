@@ -96,6 +96,7 @@ label {
     padding-right: .5em;
 }
 
+/* BioForm */
 .memberBios {
     display: flex;
     flex-direction: column;
@@ -104,4 +105,11 @@ label {
 
 .bioForm {
     width: 100%;
+}
+
+.loginPage {
+    height: 20em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

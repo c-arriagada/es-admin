@@ -63,6 +63,8 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
               sx={{ height: 400 }}
               image={formValues.bio_img}
               title="member headshot"
+              component='img'
+              loading="lazy"
             />
             <CardContent>
               <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
