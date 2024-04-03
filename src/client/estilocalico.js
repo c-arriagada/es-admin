@@ -1,7 +1,7 @@
-// const HOST = "https://app.estilocalico.com"
+const HOST = "https://app.estilocalico.com"
 // The host name matters a lot - CURL OPTIONS requests will fail to `http://localhost:5000`
 // and they will succeed when asking for `http://127.0.0.1:5000`
-const HOST = "http://127.0.0.1:5000"
+// const HOST = "http://127.0.0.1:5000"
 
 async function allEvents(token) {
     const response = await fetch(`${HOST}/events`, {

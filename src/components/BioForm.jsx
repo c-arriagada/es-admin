@@ -8,13 +8,12 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Typography,
 } from "@mui/material";
 import authContext from "../client/context";
 import { img } from "../assets/defautlmg";
 
 const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
-  // const idToken = useContext(authContext)
+const idToken = useContext(authContext)
 
   const emptyForm = {
     first_name: "",
@@ -24,13 +23,12 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
   };
 
   const [formValues, setFormValues] = useState(startingData || emptyForm);
-  // const [fileName, setFileName] = useState(undefined)
   const [file, setFile] = useState(undefined);
   const [imgString, setImgString] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit({ ...formValues, bio_img: imgString }); // TODO: add idToken before deploying to production
+    onSubmit({ ...formValues, bio_img: imgString }, idToken);
     setFormValues(emptyForm);
   }
 
@@ -74,7 +72,6 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
                   color="secondary"
                   size="small"
                   label="First Name"
-                  // sx={{ m: 1, width: '30ch' }}
                   onChange={(e) =>
                     setFormValues({ ...formValues, first_name: e.target.value })
                   }
@@ -88,7 +85,6 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
                   color="secondary"
                   size="small"
                   label="Last Name"
-                  // sx={{ m: 1, width: '30ch' }}
                   onChange={(e) =>
                     setFormValues({ ...formValues, last_name: e.target.value })
                   }
@@ -134,7 +130,7 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
                     variant="outlined"
                     size="small"
                     color="secondary"
-                    onClick={() => updateBio(formValues)}
+                    onClick={() => updateBio(formValues, idToken)}
                   >
                     Save
                   </Button>,
@@ -143,7 +139,7 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
                     variant="contained"
                     size="small"
                     color="error"
-                    onClick={() => deleteBio(formValues["id"])}
+                    onClick={() => deleteBio(formValues["id"], idToken)}
                   >
                     Delete
                   </Button>,
