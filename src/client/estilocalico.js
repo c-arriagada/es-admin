@@ -1,10 +1,5 @@
-const HOST = "https://app.estilocalico.com"
-// The host name matters a lot - CURL OPTIONS requests will fail to `http://localhost:5000`
-// and they will succeed when asking for `http://127.0.0.1:5000`
-// const HOST = "http://127.0.0.1:5000"
-
 async function allEvents(token) {
-    const response = await fetch(`${HOST}/events`, {
+    const response = await fetch(`${BACKEND_URL}/events`, {
         method: 'GET',
         headers: {
             Authorization: token
@@ -15,7 +10,7 @@ async function allEvents(token) {
 }
 
 async function getEvent(eventId, token) {
-    const response = await fetch(`${HOST}/events/${eventId}`, {
+    const response = await fetch(`${BACKEND_URL}/events/${eventId}`, {
         method: 'GET',
         headers: {
             Authorization: token
@@ -27,7 +22,7 @@ async function getEvent(eventId, token) {
 }
 
 async function createEvent(eventObj, token) {
-    const response = await fetch(`${HOST}/events`, {
+    const response = await fetch(`${BACKEND_URL}/events`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -40,7 +35,7 @@ async function createEvent(eventObj, token) {
 }
 
 async function deleteEvent(eventId, token) {
-    const response = await fetch(`${HOST}/events/${eventId}`, {
+    const response = await fetch(`${BACKEND_URL}/events/${eventId}`, {
         method: 'DELETE',
         headers: {
             Authorization: token,
@@ -51,7 +46,7 @@ async function deleteEvent(eventId, token) {
 
 async function updateEvent(eventObj, eventId, token) {
     console.log("[updating event] idToken", token)
-    const response = await fetch(`${HOST}/events/${eventId}`, {
+    const response = await fetch(`${BACKEND_URL}/events/${eventId}`, {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
@@ -76,7 +71,7 @@ async function getAuthToken(code) {
             'grant_type': 'authorization_code',
             'client_id': '7nk2p2fkrha638okq6m2tbobir',
             'code': `${code}`,
-            'redirect_uri': 'http://localhost:8080' // change to https://admin.estilocalico.com before deploying
+            'redirect_uri': FRONTEND_URL
         })
     }
     console.log("[get auth token] request options", postOptions)
@@ -91,7 +86,7 @@ async function getAuthToken(code) {
 }
 
 async function allBios(token) {
-    const response = await fetch(`${HOST}/bios`, {
+    const response = await fetch(`${BACKEND_URL}/bios`, {
         method: 'GET',
         headers: {
             Authorization: token
@@ -102,7 +97,7 @@ async function allBios(token) {
 }
 
 async function getBio(bioId, token) {
-    const response = await fetch(`${HOST}/bios/${bioId}`, {
+    const response = await fetch(`${BACKEND_URL}/bios/${bioId}`, {
         method: 'GET',
         headers: {
             Authorization: token
@@ -113,7 +108,7 @@ async function getBio(bioId, token) {
 }
 
 async function createBio(bioObj, token) {
-    const response = await fetch(`${HOST}/bios`, {
+    const response = await fetch(`${BACKEND_URL}/bios`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -126,7 +121,7 @@ async function createBio(bioObj, token) {
 }
 
 async function deleteBio(bioId, token) {
-    const response = await fetch(`${HOST}/bios/${bioId}`, {
+    const response = await fetch(`${BACKEND_URL}/bios/${bioId}`, {
         method: 'DELETE',
         headers: {
             Authorization: token,
@@ -137,7 +132,7 @@ async function deleteBio(bioId, token) {
 
 async function updateBio(bioObj, token) {
     // console.log("[updating event] idToken", token)
-    const response = await fetch(`${HOST}/bios/${bioObj["id"]}`, {
+    const response = await fetch(`${BACKEND_URL}/bios/${bioObj["id"]}`, {
         method: 'PATCH',
         headers: {
             "Content-type": "application/json",
