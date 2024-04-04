@@ -2,12 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import NavBar from "../components/NavBar"
 import BioForm from "../components/BioForm";
 import { createBio, allBios, deleteBio, updateBio} from "../client/estilocalico";
-import authContext from "../client/context";
+import AuthContext from "../client/context";
 
-function Bios() {
+function BioPage() {
     const [bios, setBios] = useState([])
 
-    const idToken = useContext(authContext)
+    const idToken = useContext(AuthContext)
 
     const reloadBios = async () => {
         let memberBios = await allBios(idToken) // [{...}, {...}]
@@ -24,8 +24,8 @@ function Bios() {
     }
 
     useEffect(() => {
-        reloadBios()
-    }, [])
+        idToken && reloadBios()
+    }, [idToken])
 
     const delBio = (bioId, token) => {
         deleteBio(bioId, token)
@@ -44,12 +44,23 @@ function Bios() {
 
     return (
         <>
-            <NavBar />
             <h1>Bios</h1>
             <div className="memberBios">
                 <BioForm key={"new"} onSubmit={newBio} />
                 {bios && bios.map((bio) => <BioForm key={bio["id"]} startingData={bio} deleteBio ={delBio} updateBio={updBio}/>)}
             </div>
+        </>
+    )
+}
+
+function Bios({user}) {
+
+    return (
+        <>
+            <AuthContext.Provider value={user.accessToken}>
+                <NavBar />
+                <BioPage />
+            </AuthContext.Provider>
         </>
     )
 }

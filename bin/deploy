@@ -1,4 +1,5 @@
 #!/bin/bash
 pushd /Users/caherita/code/es-admin/dist
 aws s3 cp . s3://estilo-calico-admin/ --exclude "*" --include "*" --recursive
+aws cloudfront create-invalidation --distribution-id E2B5K45NV3S0IX --paths '/*' 
 popd

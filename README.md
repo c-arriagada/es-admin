@@ -8,3 +8,11 @@
 Custom Cloud-Based Content Management System
 
 Deployed in AWS, React frontend, Python/Flask backend, Terraform for infrastructure as code.
+
+# Deployment
+
+```bash
+./bin/deploy
+```
+
+

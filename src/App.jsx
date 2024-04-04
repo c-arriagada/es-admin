@@ -39,7 +39,7 @@ function App() {
             <Routes>
                     <Route index element={<Login />} />
                     <Route path="home" element={<Home user={user} />} />
-                    <Route path="bios" element={<Bios />} />
+                    <Route path="bios" element={<Bios user={user}/>} />
                     <Route path="login" element={<Login />} />
             </Routes>
     )
