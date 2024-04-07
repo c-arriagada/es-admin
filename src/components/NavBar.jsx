@@ -16,6 +16,7 @@ export default function ButtonAppBar() {
           </Typography>
           <Button component={Link} to={'/home'} color="inherit">Events</Button>
           <Button component={Link} to={'/bios'} color="inherit">Bios</Button>
+          <Button component={Link} to={'/videos'} color="inherit">Videos</Button>
           <Button component={Link} to={'/login'} color="inherit">Sign Out</Button>
         </Toolbar>
       </AppBar>

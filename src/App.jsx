@@ -3,6 +3,7 @@ import { Routes, Route} from "react-router-dom"
 import Home from "./pages/Home"
 import Login from './pages/Login';
 import Bios from "./pages/Bios";
+import Videos from './pages/Videos';
 import { useNavigate } from 'react-router-dom';
 import { getAuthToken } from './client/estilocalico';
 import './styles.css'
@@ -40,6 +41,7 @@ function App() {
                     <Route index element={<Login />} />
                     <Route path="home" element={<Home user={user} />} />
                     <Route path="bios" element={<Bios user={user}/>} />
+                    <Route path="videos" element={<Videos user={user}/>} />
                     <Route path="login" element={<Login />} />
             </Routes>
     )
