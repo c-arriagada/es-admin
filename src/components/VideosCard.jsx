@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { createVideo } from "../client/estilocalico";
 import {
   Button,
   TextField,
@@ -95,7 +94,9 @@ const DescriptionField = ({ description, onChange }) => {
   );
 };
 
-function VideosCard({ startingData, deleteVideo, updateMetadata }) {
+function VideosCard({ startingData, createVideo, deleteVideo, updateMetadata }) {
+    console.log('create video', createVideo)
+    console.log('delete video', deleteVideo)
   // startingData refers to existing data from the database
   const [videoName, setVideoName] = useState(startingData?.videos_name);
   const [description, setDescription] = useState(startingData?.description);
@@ -115,9 +116,9 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
     createVideo(file, metadata, idToken);
 
     // reset values
-    // setVideoName("");
-    // setDescription("");
-    // setFile(undefined);
+    setVideoName("");
+    setDescription("");
+    setFile(undefined);
   }
 
   function onChange(e) {

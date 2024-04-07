@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import VideosCard from "../components/VideosCard";
 import NavBar from "../components/NavBar";
-import { allVideos, updateMetadata, deleteVideo } from "../client/estilocalico";
+import { allVideos, updateMetadata, deleteVideo, createVideo } from "../client/estilocalico";
 import AuthContext from "../client/context";
 
 function VideoPage() {
@@ -19,6 +19,10 @@ function VideoPage() {
     idToken && reloadVideos();
   }, [idToken]);
 
+  const createVid = (file, metadataObj, token) => {
+    createVideo(file, metadataObj, token).then(reloadVideos)
+  }
+
   const deleteVid = (videoId, token) => {
     deleteVideo(videoId, token).then(reloadVideos);
   };
@@ -32,7 +36,7 @@ function VideoPage() {
   return (
     <>
         <h1>Videos</h1>
-        <VideosCard key={"newVideo"} />
+        <VideosCard key={"newVideo"} createVideo={createVid} />
         {videos &&
           videos.map((video) => (
             <VideosCard
