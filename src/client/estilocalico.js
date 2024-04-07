@@ -144,8 +144,8 @@ async function updateBio(bioObj, token) {
     return updatedEvent;
 }
 
-async function updateVideo(formData) {
-    const response = await fetch(`${BACKEND_URL}/upload`, {
+async function createVideo(formData) {
+    const response = await fetch(`${BACKEND_URL}/videos`, {
         method: 'POST',
         body: formData
     })
@@ -165,5 +165,5 @@ export {
     createBio,
     updateBio,
     deleteBio, 
-    updateVideo,
+    createVideo,
     }
