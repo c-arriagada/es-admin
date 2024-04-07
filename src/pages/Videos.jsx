@@ -4,12 +4,13 @@ import NavBar from "../components/NavBar";
 import { allVideos, updateMetadata, deleteVideo } from "../client/estilocalico";
 import AuthContext from "../client/context";
 
-function Videos({user}) {
+function VideoPage() {
   const [videos, setVideos] = useState([]);
 
   const idToken = useContext(AuthContext);
 
   const reloadVideos = async () => {
+    console.log("reloading videos")
     let videos = await allVideos(idToken);
     setVideos(videos);
   };
@@ -26,10 +27,10 @@ function Videos({user}) {
     updateMetadata(videoObj, token).then(reloadVideos);
   };
 
+  console.log('videos', videos)
+
   return (
     <>
-      <AuthContext.Provider value={user.accessToken}>
-        <NavBar />
         <h1>Videos</h1>
         <VideosCard key={"newVideo"} />
         {videos &&
@@ -41,6 +42,16 @@ function Videos({user}) {
               updateMetadata={updMetadata}
             />
           ))}
+    </>
+  );
+}
+
+function Videos({ user }) {
+  return (
+    <>
+      <AuthContext.Provider value={user.accessToken}>
+        <NavBar />
+        <VideoPage />
       </AuthContext.Provider>
     </>
   );

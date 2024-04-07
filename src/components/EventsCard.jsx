@@ -12,7 +12,7 @@ function EventsCard() {
     const [eventDetails, setEventDetails] = useState()
 
     const idToken = useContext(AuthContext)
-    console.log("[loading events] retrieve id_token", idToken)
+    console.log("[loading events] retrieve id_token")
 
     useEffect(() => {
         // allEvents returns a Promise. I needed to use .then() to access value 

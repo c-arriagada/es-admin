@@ -79,7 +79,7 @@ async function getAuthToken(code) {
   const authToken = await fetch(url, postOptions)
     .then((response) => response.json())
     .then((tokenResponse) => {
-      console.log("[get auth token] id_token response", tokenResponse.id_token);
+      // console.log("[get auth token] id_token response", tokenResponse.id_token);
       return tokenResponse.id_token;
     });
   return authToken;
@@ -145,6 +145,7 @@ async function updateBio(bioObj, token) {
 }
 
 async function allVideos(token) {
+  console.log('Getting all videos')
   const response = await fetch(`${BACKEND_URL}/videos`, {
     method: "GET",
     headers: {
