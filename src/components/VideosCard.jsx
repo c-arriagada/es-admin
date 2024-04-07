@@ -94,7 +94,7 @@ const DescriptionField = ({ description, onChange }) => {
   );
 };
 
-function VideosCard({ startingData }) {
+function VideosCard({ startingData, deleteVideo, updateMetadata }) {
   // startingData refers to existing data from the database
   const [videoName, setVideoName] = useState(startingData?.videos_name);
   const [description, setDescription] = useState(startingData?.description);
@@ -171,8 +171,16 @@ function VideosCard({ startingData }) {
             </>
           ) : (
             <>
-              <UpdateMetadataButton />
-              <DeleteButton />
+              <UpdateMetadataButton
+                handleMetadata={() =>
+                  updateMetadata({
+                    videos_name: videoName,
+                    description: description,
+                    id: startingData.id
+                  })
+                }
+              />
+              <DeleteButton handleDelete={() => deleteVideo(startingData.id)} />
             </>
           )}
         </CardActions>

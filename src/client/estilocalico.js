@@ -162,6 +162,30 @@ async function createVideo(formData) {
     return newVid;
 }
 
+async function updateMetadata(videoObj) {
+    // console.log("[updating event] idToken", token)
+    const response = await fetch(`${BACKEND_URL}/videos/${videoObj.id}`, {
+        method: 'PATCH',
+        headers: {
+            "Content-type": "application/json",
+            // Authorization: token,
+        },
+        body: JSON.stringify(videoObj)
+    });
+    const updatedEvent = response.json()
+    return updatedEvent;
+}
+
+async function deleteVideo(videoId) {
+    const response = await fetch(`${BACKEND_URL}/videos/${videoId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: token,
+        }
+    });
+    return "Video was deleted";
+}
+
 export { 
     allEvents, 
     getEvent, 
@@ -176,4 +200,6 @@ export {
     deleteBio,
     allVideos, 
     createVideo,
+    updateMetadata,
+    deleteVideo
     }

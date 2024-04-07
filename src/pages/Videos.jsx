@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import VideosCard from "../components/VideosCard";
 import NavBar from "../components/NavBar";
-import { allVideos } from "../client/estilocalico";
+import { allVideos, updateMetadata, deleteVideo } from "../client/estilocalico";
 
 function Videos() {
   const [videos, setVideos] = useState([]);
@@ -16,6 +16,14 @@ function Videos() {
     reloadVideos();
   }, []);
 
+  const deleteVid = (videoId) => {
+    deleteVideo(videoId).then(reloadVideos)
+  }
+
+  const updMetadata =(videoObj)=> {
+    updateMetadata(videoObj).then(reloadVideos)
+  }
+
   return (
     <>
       <NavBar />
@@ -23,7 +31,7 @@ function Videos() {
       <VideosCard key={"newVideo"} />
       {videos &&
         videos.map((video) => (
-          <VideosCard key={video["id"]} startingData={video} />
+          <VideosCard key={video["id"]} startingData={video} deleteVideo={deleteVid} updateMetadata={updMetadata}/>
         ))}
     </>
   );
