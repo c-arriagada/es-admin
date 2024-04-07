@@ -145,17 +145,23 @@ async function updateBio(bioObj, token) {
   return updatedEvent;
 }
 
-async function allVideos() {
+async function allVideos(token) {
   const response = await fetch(`${BACKEND_URL}/videos`, {
     method: "GET",
+    headers: {
+        Authorization: token,
+      },
   });
   const videos = response.json();
   return videos;
 }
 
-async function createVideo(formData) {
+async function createVideo(formData, token) {
   const response = await fetch(`${BACKEND_URL}/videos`, {
     method: "POST",
+    headers: {
+        Authorization: token,
+      },
     body: formData,
   });
 
@@ -163,13 +169,12 @@ async function createVideo(formData) {
   return newVid;
 }
 
-async function updateMetadata(videoObj) {
-  // console.log("[updating event] idToken", token)
+async function updateMetadata(videoObj, token) {
   const response = await fetch(`${BACKEND_URL}/videos/${videoObj.id}`, {
     method: "PATCH",
     headers: {
       "Content-type": "application/json",
-      // Authorization: token,
+      Authorization: token,
     },
     body: JSON.stringify(videoObj),
   });
@@ -177,12 +182,12 @@ async function updateMetadata(videoObj) {
   return updatedEvent;
 }
 
-async function deleteVideo(videoId) {
+async function deleteVideo(videoId, token) {
   const response = await fetch(`${BACKEND_URL}/videos/${videoId}`, {
     method: "DELETE",
-    // headers: {
-    //     Authorization: token,
-    // }
+    headers: {
+        Authorization: token,
+    }
   });
   return "Video was deleted";
 }

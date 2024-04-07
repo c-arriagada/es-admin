@@ -13,7 +13,7 @@ import authContext from "../client/context";
 import { img } from "../assets/defautlmg";
 
 const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
-const idToken = useContext(authContext)
+  const idToken = useContext(authContext);
 
   const emptyForm = {
     first_name: "",
@@ -30,6 +30,7 @@ const idToken = useContext(authContext)
     event.preventDefault();
     onSubmit({ ...formValues, bio_img: imgString }, idToken);
     setFormValues(emptyForm);
+    setFile(undefined);
   }
 
   function handleOnChange(e) {
@@ -43,128 +44,123 @@ const idToken = useContext(authContext)
   }
 
   return (
-
-      <Box
-        // component="form"
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "auto",
-          padding: "10px",
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <form className="bioForm" onSubmit={handleSubmit}>
-          <Card sx={{ maxWidth: 500 }} elevation={8}>
-            <CardMedia
-              sx={{ height: 400 }}
-              image={formValues.bio_img}
-              title="member headshot"
-              component='img'
-              loading="lazy"
-            />
-            <CardContent>
-              <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
-                <TextField
-                  type="text"
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  label="First Name"
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, first_name: e.target.value })
-                  }
-                  value={formValues.first_name}
-                  fullWidth
-                  required
-                />
-                <TextField
-                  type="text"
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  label="Last Name"
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, last_name: e.target.value })
-                  }
-                  value={formValues.last_name}
-                  fullWidth
-                  required
-                />
-              </Stack>
+    <Box
+      // component="form"
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        width: "auto",
+        padding: "10px",
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <form className="bioForm" onSubmit={handleSubmit}>
+        <Card sx={{ maxWidth: 500 }} elevation={8}>
+          <CardMedia
+            sx={{ height: 400 }}
+            image={formValues.bio_img}
+            title="member headshot"
+            component="img"
+            loading="lazy"
+          />
+          <CardContent>
+            <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
               <TextField
+                type="text"
                 variant="outlined"
                 color="secondary"
-                label="Bio"
+                size="small"
+                label="First Name"
                 onChange={(e) =>
-                  setFormValues({ ...formValues, bio: e.target.value })
+                  setFormValues({ ...formValues, first_name: e.target.value })
                 }
-                value={formValues.bio}
-                multiline
-                rows={12}
+                value={formValues.first_name}
                 fullWidth
                 required
               />
-              <Stack
-                spacing={2}
-                direction="row"
-                sx={{ marginBottom: 3 }}
-              ></Stack>
-            </CardContent>
-            <CardActions>
-              {!startingData ? (
+              <TextField
+                type="text"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                label="Last Name"
+                onChange={(e) =>
+                  setFormValues({ ...formValues, last_name: e.target.value })
+                }
+                value={formValues.last_name}
+                fullWidth
+                required
+              />
+            </Stack>
+            <TextField
+              variant="outlined"
+              color="secondary"
+              label="Bio"
+              onChange={(e) =>
+                setFormValues({ ...formValues, bio: e.target.value })
+              }
+              value={formValues.bio}
+              multiline
+              rows={12}
+              fullWidth
+              required
+            />
+            <Stack spacing={2} direction="row" sx={{ marginBottom: 3 }}></Stack>
+          </CardContent>
+          <CardActions>
+            {!startingData ? (
+              <Button
+                key="create"
+                variant="outlined"
+                size="small"
+                color="secondary"
+                type="submit"
+              >
+                Add New Bio
+              </Button>
+            ) : (
+              [
                 <Button
-                  key="create"
+                  key="save"
                   variant="outlined"
                   size="small"
                   color="secondary"
-                  type="submit"
+                  onClick={() => updateBio(formValues, idToken)}
                 >
-                  Add New Bio
-                </Button>
-              ) : (
-                [
-                  <Button
-                    key="save"
-                    variant="outlined"
-                    size="small"
-                    color="secondary"
-                    onClick={() => updateBio(formValues, idToken)}
-                  >
-                    Save
-                  </Button>,
-                  <Button
-                    key="del"
-                    variant="contained"
-                    size="small"
-                    color="error"
-                    onClick={() => deleteBio(formValues["id"], idToken)}
-                  >
-                    Delete
-                  </Button>,
-                ]
-              )}
-              <Button
-                key="upload"
-                variant="contained"
-                size="small"
-                color="secondary"
-                component="label"
-              >
-                Upload Photo
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={handleOnChange}
-                />
-              </Button>
-              <a>{file?.name}</a>
-            </CardActions>
-          </Card>
-        </form>
-      </Box>
+                  Save
+                </Button>,
+                <Button
+                  key="del"
+                  variant="contained"
+                  size="small"
+                  color="error"
+                  onClick={() => deleteBio(formValues["id"], idToken)}
+                >
+                  Delete
+                </Button>,
+              ]
+            )}
+            <Button
+              key="upload"
+              variant="contained"
+              size="small"
+              color="secondary"
+              component="label"
+            >
+              Upload Photo
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleOnChange}
+              />
+            </Button>
+            <a>{file?.name}</a>
+          </CardActions>
+        </Card>
+      </form>
+    </Box>
   );
 };
 

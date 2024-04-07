@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
+import authContext from "../client/context";
 
 const NewVideoButton = ({ onClick }) => {
   return (
@@ -100,6 +101,8 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
   const [description, setDescription] = useState(startingData?.description);
   const [file, setFile] = useState(undefined);
 
+  const idToken = useContext(authContext)
+
   function handleClick(e) {
     e.preventDefault();
     const data = new FormData();
@@ -107,9 +110,7 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
     data.append("file_name", file.name);
     data.append("video_name", videoName);
     data.append("description", description);
-    console.log("data", data);
-    let response = createVideo(data);
-    console.log(response);
+    createVideo(data, idToken);
     // reset values
     setVideoName("");
     setDescription("");
@@ -118,14 +119,11 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
 
   function onChange(e) {
     const selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
     setFile(selectedFile);
-    console.log("selected file name", selectedFile.name);
   }
 
   return (
     <Box
-      // component="form"
       sx={{
         display: "flex",
         flexWrap: "wrap",
@@ -177,10 +175,10 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
                     videos_name: videoName,
                     description: description,
                     id: startingData.id
-                  })
+                  }, idToken)
                 }
               />
-              <DeleteButton handleDelete={() => deleteVideo(startingData.id)} />
+              <DeleteButton handleDelete={() => deleteVideo(startingData.id, idToken)} />
             </>
           )}
         </CardActions>
