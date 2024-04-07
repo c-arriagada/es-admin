@@ -42,10 +42,6 @@ function EventsCard() {
     const updEvent = (eventObj, eventId, token) => {
         updateEvent(eventObj, eventId, token)
             .then((updatedEvent) => {
-                // reset state with the information of the updated event
-                // find event that was updated
-                // update event info
-                console.log(updatedEvent)
                 const updatedEvents = events.map((oldEvent) => {
                     if (oldEvent.id.toString() === eventId) {
                         return { ...oldEvent, ...updatedEvent }

@@ -17,7 +17,7 @@ async function getEvent(eventId, token) {
     },
   });
   const event = response.json();
-  console.log(event);
+  console.log("event", event);
   return event;
 }
 
@@ -82,7 +82,6 @@ async function getAuthToken(code) {
       console.log("[get auth token] id_token response", tokenResponse.id_token);
       return tokenResponse.id_token;
     });
-  // console.log(authToken)
   return authToken;
 }
 
@@ -165,7 +164,24 @@ async function createVideo(formData, token) {
     body: formData,
   });
 
-  const newVid = response.json();
+  const newVid = await response.json();
+
+  console.log('Uploading video to s3 bucket', newVid)
+  // TODO: write explanation
+  fetch(newVid['upload_url'], {
+    method: 'PUT',
+    body:formData["file"]
+  })
+  .then(response => {
+    if(!response.ok) {
+      throw new Error('Upload failed');
+    }
+    alert('Upload successful');
+  })
+  .catch(err => {
+    console.error('Error uploading video', err);
+    alert('Upload failed');
+  })
   return newVid;
 }
 

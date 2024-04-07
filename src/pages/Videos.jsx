@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import { allVideos, updateMetadata, deleteVideo } from "../client/estilocalico";
 import AuthContext from "../client/context";
 
-function Videos() {
+function Videos({user}) {
   const [videos, setVideos] = useState([]);
 
   const idToken = useContext(AuthContext);

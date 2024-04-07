@@ -34,7 +34,7 @@ function App() {
         updateUser();
     }, [callback])
 
-    console.log(user)
+    console.log("user", user)
 
     return (
             <Routes>
