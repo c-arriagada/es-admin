@@ -43,7 +43,7 @@ const idToken = useContext(authContext)
   }
 
   return (
-    <>
+
       <Box
         // component="form"
         sx={{
@@ -165,7 +165,6 @@ const idToken = useContext(authContext)
           </Card>
         </form>
       </Box>
-    </>
   );
 };
 

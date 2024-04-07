@@ -4,14 +4,100 @@ import {
   Button,
   TextField,
   Stack,
+  Box,
   Card,
   CardActions,
   CardContent,
+  CardMedia,
 } from "@mui/material";
 
-function VideosCard() {
-  const [videoName, setVideoName] = useState("");
-  const [description, setDescription] = useState("");
+const NewVideoButton = ({ onClick }) => {
+  return (
+    <Button
+      key="createVid"
+      variant="outlined"
+      size="small"
+      color="secondary"
+      component="label"
+      onClick={onClick}
+    >
+      Add New Video
+    </Button>
+  );
+};
+
+const UploadFileButton = ({ onChange }) => {
+  return (
+    <Button
+      key="uploadVid"
+      variant="contained"
+      size="small"
+      color="secondary"
+      component="label"
+    >
+      Upload File
+      <input
+        type="file"
+        accept="video/mp4,video/x-m4v,video/*"
+        hidden
+        onChange={onChange}
+      />
+    </Button>
+  );
+};
+
+const DeleteButton = ({ handleDelete }) => {
+  return (
+    <Button
+      key="deleteVid"
+      variant="contained"
+      size="small"
+      color="error"
+      component="label"
+      onClick={handleDelete}
+    >
+      Delete Video
+    </Button>
+  );
+};
+
+const UpdateMetadataButton = ({ handleMetadata }) => {
+  return (
+    <Button
+      key="updateVid"
+      variant="outlined"
+      size="small"
+      color="secondary"
+      component="label"
+      onClick={handleMetadata}
+    >
+      Update
+    </Button>
+  );
+};
+
+const DescriptionField = ({ description, onChange }) => {
+  return (
+    <TextField
+      type="text"
+      variant="outlined"
+      color="secondary"
+      size="small"
+      label="Video description"
+      onChange={onChange}
+      value={description}
+      multiline
+      rows={5}
+      fullWidth
+      required
+    />
+  );
+};
+
+function VideosCard({ startingData }) {
+  // startingData refers to existing data from the database
+  const [videoName, setVideoName] = useState(startingData?.videos_name);
+  const [description, setDescription] = useState(startingData?.description);
   const [file, setFile] = useState(undefined);
 
   function handleClick(e) {
@@ -38,9 +124,26 @@ function VideosCard() {
   }
 
   return (
-    <>
-      <Card sx={{ maxWidth: 500 }} elevation={8}>
+    <Box
+      // component="form"
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        width: "auto",
+        padding: "10px",
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <Card sx={{ maxWidth: 500, padding: "10px" }} elevation={8}>
         <CardContent>
+          <CardMedia
+            sx={{ height: 400 }}
+            src={`https://www.estilocalico.com/${startingData?.pointer}`}
+            title="video"
+            component="video"
+            loading="lazy"
+          />
           <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
             <TextField
               type="text"
@@ -53,51 +156,28 @@ function VideosCard() {
               required
             />
           </Stack>
-          <TextField
-            type="text"
-            variant="outlined"
-            color="secondary"
-            size="small"
-            label="Video description"
+          <DescriptionField
             onChange={(e) => setDescription(e.target.value)}
-            value={description}
-            multiline
-            rows={5}
-            fullWidth
-            required
+            description={description}
           />
         </CardContent>
         <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}></Stack>
         <CardActions>
-          <Button
-            key="createVid"
-            variant="outlined"
-            size="small"
-            color="secondary"
-            component="label"
-            onClick={handleClick}
-          >
-            Create Video
-          </Button>
-          <Button
-            key="uploadVid"
-            variant="contained"
-            size="small"
-            color="secondary"
-            component="label"
-          >
-            Upload File
-            <input
-              type="file"
-              accept="video/mp4,video/x-m4v,video/*"
-              hidden
-              onChange={onChange}
-            />
-          </Button>
-          <a>{file?.name}</a>
+          {!startingData ? (
+            <>
+              <NewVideoButton onClick={handleClick} />
+              <UploadFileButton onChange={onChange} />
+              <a>{file?.name}</a>
+            </>
+          ) : (
+            <>
+              <UpdateMetadataButton />
+              <DeleteButton />
+            </>
+          )}
         </CardActions>
       </Card>
-    </>
+    </Box>
   );
 }
 
