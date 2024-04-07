@@ -101,20 +101,23 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
   const [description, setDescription] = useState(startingData?.description);
   const [file, setFile] = useState(undefined);
 
-  const idToken = useContext(authContext)
+  const idToken = useContext(authContext);
 
-  function handleClick(e) {
+  function uploadNewVideo(e) {
     e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    data.append("file_name", file.name);
-    data.append("video_name", videoName);
-    data.append("description", description);
-    createVideo(data, idToken);
+
+    const metadata = {
+      file_name: file.name,
+      video_name: videoName,
+      description: description,
+    };
+
+    createVideo(file, metadata, idToken);
+
     // reset values
-    setVideoName("");
-    setDescription("");
-    setFile(undefined);
+    // setVideoName("");
+    // setDescription("");
+    // setFile(undefined);
   }
 
   function onChange(e) {
@@ -163,7 +166,7 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
         <CardActions>
           {!startingData ? (
             <>
-              <NewVideoButton onClick={handleClick} />
+              <NewVideoButton onClick={uploadNewVideo} />
               <UploadFileButton onChange={onChange} />
               <a>{file?.name}</a>
             </>
@@ -171,14 +174,19 @@ function VideosCard({ startingData, deleteVideo, updateMetadata }) {
             <>
               <UpdateMetadataButton
                 handleMetadata={() =>
-                  updateMetadata({
-                    videos_name: videoName,
-                    description: description,
-                    id: startingData.id
-                  }, idToken)
+                  updateMetadata(
+                    {
+                      videos_name: videoName,
+                      description: description,
+                      id: startingData.id,
+                    },
+                    idToken
+                  )
                 }
               />
-              <DeleteButton handleDelete={() => deleteVideo(startingData.id, idToken)} />
+              <DeleteButton
+                handleDelete={() => deleteVideo(startingData.id, idToken)}
+              />
             </>
           )}
         </CardActions>

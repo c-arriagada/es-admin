@@ -145,44 +145,47 @@ async function updateBio(bioObj, token) {
 }
 
 async function allVideos(token) {
-  console.log('Getting all videos')
+  console.log("Getting all videos");
   const response = await fetch(`${BACKEND_URL}/videos`, {
     method: "GET",
     headers: {
-        Authorization: token,
-      },
+      Authorization: token,
+    },
   });
   const videos = response.json();
   return videos;
 }
 
-async function createVideo(formData, token) {
+async function createVideo(file, metadata, token) {
+  console.log("Creating new video: ", metadata, file);
+
   const response = await fetch(`${BACKEND_URL}/videos`, {
     method: "POST",
     headers: {
-        Authorization: token,
-      },
-    body: formData,
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify(metadata),
   });
 
   const newVid = await response.json();
 
-  console.log('Uploading video to s3 bucket', newVid)
   // TODO: write explanation
-  fetch(newVid['upload_url'], {
-    method: 'PUT',
-    body:formData["file"]
+  console.log("Uploading video to s3 bucket", newVid);
+  fetch(newVid["upload_url"], {
+    method: "PUT",
+    body: file,
   })
-  .then(response => {
-    if(!response.ok) {
-      throw new Error('Upload failed');
-    }
-    alert('Upload successful');
-  })
-  .catch(err => {
-    console.error('Error uploading video', err);
-    alert('Upload failed');
-  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      alert("Upload successful");
+    })
+    .catch((err) => {
+      console.error("Error uploading video", err);
+      alert("Upload failed");
+    });
   return newVid;
 }
 
@@ -203,8 +206,8 @@ async function deleteVideo(videoId, token) {
   const response = await fetch(`${BACKEND_URL}/videos/${videoId}`, {
     method: "DELETE",
     headers: {
-        Authorization: token,
-    }
+      Authorization: token,
+    },
   });
   return "Video was deleted";
 }
