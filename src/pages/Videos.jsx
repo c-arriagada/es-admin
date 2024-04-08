@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import VideosCard from "../components/VideosCard";
 import NavBar from "../components/NavBar";
-import { allVideos, updateMetadata, deleteVideo, createVideo } from "../client/estilocalico";
+import {
+  allVideos,
+  updateMetadata,
+  deleteVideo,
+  createVideo,
+} from "../client/estilocalico";
 import AuthContext from "../client/context";
 
 function VideoPage() {
@@ -10,7 +15,7 @@ function VideoPage() {
   const idToken = useContext(AuthContext);
 
   const reloadVideos = async () => {
-    console.log("reloading videos")
+    console.log("reloading videos");
     let videos = await allVideos(idToken);
     setVideos(videos);
   };
@@ -20,8 +25,8 @@ function VideoPage() {
   }, [idToken]);
 
   const createVid = (file, metadataObj, token) => {
-    createVideo(file, metadataObj, token).then(reloadVideos)
-  }
+    createVideo(file, metadataObj, token).then(reloadVideos);
+  };
 
   const deleteVid = (videoId, token) => {
     deleteVideo(videoId, token).then(reloadVideos);
@@ -31,11 +36,12 @@ function VideoPage() {
     updateMetadata(videoObj, token).then(reloadVideos);
   };
 
-  console.log('videos', videos)
+  console.log("videos", videos);
 
   return (
     <>
-        <h1>Videos</h1>
+      <h1>Videos</h1>
+      <div className="videos">
         <VideosCard key={"newVideo"} createVideo={createVid} />
         {videos &&
           videos.map((video) => (
@@ -46,6 +52,7 @@ function VideoPage() {
               updateMetadata={updMetadata}
             />
           ))}
+      </div>
     </>
   );
 }

@@ -94,9 +94,12 @@ const DescriptionField = ({ description, onChange }) => {
   );
 };
 
-function VideosCard({ startingData, createVideo, deleteVideo, updateMetadata }) {
-    console.log('create video', createVideo)
-    console.log('delete video', deleteVideo)
+function VideosCard({
+  startingData,
+  createVideo,
+  deleteVideo,
+  updateMetadata,
+}) {
   // startingData refers to existing data from the database
   const [videoName, setVideoName] = useState(startingData?.videos_name);
   const [description, setDescription] = useState(startingData?.description);
@@ -130,7 +133,7 @@ function VideosCard({ startingData, createVideo, deleteVideo, updateMetadata }) 
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",
+        // flexWrap: "wrap",
         width: "auto",
         padding: "10px",
       }}
@@ -141,12 +144,13 @@ function VideosCard({ startingData, createVideo, deleteVideo, updateMetadata }) 
         <CardContent>
           <CardMedia
             sx={{ height: 400 }}
-            src={`https://www.estilocalico.com/${startingData?.pointer}`}
+            controls
+            src={`https://www.estilocalico.com/videos/${startingData?.pointer}`}
             title="video"
             component="video"
             loading="lazy"
           />
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 1 }}>
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 2, marginTop:2 }}>
             <TextField
               type="text"
               variant="outlined"
