@@ -36,12 +36,12 @@ function BioPage() {
     deleteBio(bioId, token).then(reloadBios);
   };
 
-  const newBio = (bioObj, token) => {
-    createBio(bioObj, token).then(reloadBios);
+  const newBio = (file, bioObj, token) => {
+    createBio(file, bioObj, token).then(reloadBios);
   };
 
-  const updBio = (bioObj, token) => {
-    updateBio(bioObj, token).then(reloadBios);
+  const updBio = (bioObj, token, file) => {
+    updateBio(bioObj, token, file).then(reloadBios);
   };
 
   return (

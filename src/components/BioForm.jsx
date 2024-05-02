@@ -19,16 +19,20 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
     first_name: "",
     last_name: "",
     bio: "",
-    bio_img: img,
+    img_pointer: img,
   };
 
   const [formValues, setFormValues] = useState(startingData || emptyForm);
   const [file, setFile] = useState(undefined);
-  const [imgString, setImgString] = useState("");
+  // const [imgString, setImgString] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit({ ...formValues, bio_img: imgString }, idToken);
+    onSubmit(
+      file,
+      { ...formValues, img_pointer: file.name },
+      idToken
+    );
     setFormValues(emptyForm);
     setFile(undefined);
   }
@@ -36,11 +40,11 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
   function handleOnChange(e) {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      setImgString(reader.result);
-    };
-    reader.readAsDataURL(selectedFile);
+    // const reader = new FileReader();
+    // reader.onload = function (e) {
+    //   setImgString(reader.result);
+    // };
+    // reader.readAsDataURL(selectedFile);
   }
 
   return (
@@ -59,7 +63,11 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
         <Card sx={{ maxWidth: 500 }} elevation={8}>
           <CardMedia
             sx={{ height: 400 }}
-            image={formValues.bio_img}
+            image={
+              startingData
+                ? `https://www.estilocalico.com/photos/${startingData?.img_pointer}`
+                : formValues.img_pointer
+            }
             title="member headshot"
             component="img"
             loading="lazy"
@@ -126,7 +134,19 @@ const BioForm = ({ onSubmit, startingData, deleteBio, updateBio }) => {
                   variant="outlined"
                   size="small"
                   color="secondary"
-                  onClick={() => updateBio(formValues, idToken)}
+                  onClick={() => {
+                    updateBio(
+                      file
+                        ? {
+                            ...formValues,
+                            img_pointer: file.name,
+                          }
+                        : { ...formValues },
+                      idToken,
+                      file
+                    );
+                    setFile(undefined)
+                  }}
                 >
                   Save
                 </Button>,

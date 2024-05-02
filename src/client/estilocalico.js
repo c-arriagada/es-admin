@@ -107,7 +107,7 @@ async function getBio(bioId, token) {
   return bio;
 }
 
-async function createBio(bioObj, token) {
+async function createBio(file, bioObj, token) {
   const response = await fetch(`${BACKEND_URL}/bios`, {
     method: "POST",
     headers: {
@@ -116,7 +116,24 @@ async function createBio(bioObj, token) {
     },
     body: JSON.stringify(bioObj),
   });
-  const newBio = response.json();
+  const newBio = await response.json();
+
+  // console.log("Uploading img to s3 bucket", newBio);
+  fetch(newBio["upload_url"], {
+    method: "PUT",
+    body: file,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+      alert("Upload successful");
+    })
+    .catch((err) => {
+      console.error("Error uploading video", err);
+      alert("Upload failed");
+    });
+
   return newBio;
 }
 
@@ -130,8 +147,10 @@ async function deleteBio(bioId, token) {
   return "Bio was deleted";
 }
 
-async function updateBio(bioObj, token) {
+async function updateBio(bioObj, token, file) {
+  // console.log("bioObj from updated bio", bioObj);
   // console.log("[updating event] idToken", token)
+
   const response = await fetch(`${BACKEND_URL}/bios/${bioObj["id"]}`, {
     method: "PATCH",
     headers: {
@@ -140,8 +159,27 @@ async function updateBio(bioObj, token) {
     },
     body: JSON.stringify(bioObj),
   });
-  const updatedEvent = response.json();
-  return updatedEvent;
+  const updatedBio = await response.json();
+
+  if (file !== undefined) {
+    // console.log("Uploading img to s3 bucket", updatedBio);
+    fetch(updatedBio["upload_url"], {
+      method: "PUT",
+      body: file,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Upload failed");
+        }
+        alert("Upload successful");
+      })
+      .catch((err) => {
+        console.error("Error uploading video", err);
+        alert("Upload failed");
+      });
+  }
+
+  return updatedBio;
 }
 
 async function allVideos(token) {
