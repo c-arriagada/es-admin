@@ -9,7 +9,7 @@
 Deployed in AWS, React frontend, Python/Flask backend, Terraform for infrastructure as code.
 
 ## How the CMS works
-The Estilo Calico Admin Portal allows users to manage and administer content of the [Estilo Calico](https://wwww.estilocalico.com) website.
+The Estilo Calico Admin Portal allows users to manage and administer content of the [Estilo Calico](https://www.estilocalico.com) website.
 
 ## Frontend architecture
 ![Application architecture](Images/architecture.png)
